@@ -68,7 +68,7 @@ export default {
         },
         {
           imgName: "compression",
-          title: "Compression based technique approach",
+          title: "Compression based approach",
           description:
             "Applied Zip, Gzip, Bzip, LZMA and PPmd compression algorithms to predict the probability of a true author.",
         },
