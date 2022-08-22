@@ -6,8 +6,10 @@ from werkzeug.datastructures import  FileStorage
 import ngram_model as  nm
 import compression_method as cm
 from flask import Flask, request, render_template, jsonify
+from flask_cors import CORS
 #Initialize the flask App
 app = Flask(__name__)
+CORS(app)
 ngram_clf = pickle.load(open('ngram_attribution.pkl','rb'))
 ngram_loaded_vec = pickle.load(open("ngram_vect.pkl", "rb"))
 
@@ -23,35 +25,32 @@ def test():
 @app.route('/ngram', methods = ['GET', 'POST'])
 def ngram():
     if request.method == 'POST':
-        input_text = request.form['kannada_text']
+        input_text = request.json['kannada_text']
         txt_vc = ngram_loaded_vec.transform([input_text])
         result_pred = ngram_clf.predict(txt_vc)
         accuracy = nm.ngram_accuracy
         return jsonify(
             {
-                "Author_Name ":'{}'.format(result_pred[0]),
-                "Accuracy ":str(accuracy),
-                "Model ": "ngram model"
+                "Author_Name":'{}'.format(result_pred[0]),
+                "Accuracy":str(accuracy),
+                "Model": "ngram model"
             }
         )
 
-        #return render_template('predict_author.html', prediction_text='predicted authors :{}'.format(result_pred[0]))
 @app.route('/compression', methods = ['GET', 'POST'])
 def compression():
     if request.method == 'POST':
-        user_text = request.form['kannada_text']
+        user_text = request.json['kannada_text']
         result  = cm.compression(user_text)
         accuracy = cm.comp_accuracy
         return jsonify(
             {
-                "Author_Name ":'{}'.format(result),
-                "Accuracy ":str(accuracy),
-                "Model ": "compression Model (bzip)"
+                "Author_Name":'{}'.format(result),
+                "Accuracy":str(accuracy),
+                "Model": "compression Model (bzip)"
             }
 
         )
-        # return render_template('predict_author.html', accuracy ="  Accuracy:"+str(accuracy), prediction_text='predicted authors :{}'.format(result))
-    
 
 @app.route('/lexical', methods = ['GET', 'POST'])
 def lexical():

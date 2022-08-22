@@ -1,45 +1,33 @@
 <template>
   <div class="prediction">
     <v-tabs v-model="tab">
-      <v-tab>All</v-tab>
-      <v-tab>Profile based approach</v-tab>
-      <v-tab>Bi-directional LSTM approach</v-tab>
-      <v-tab>Instance based approach</v-tab>
-      <v-tab>Compression based approach</v-tab>
-      <v-tab>Graph based approach</v-tab>
+      <v-tab class="cyan--text">All</v-tab>
+      <v-tab class="cyan--text">Ngram approach</v-tab>
+      <v-tab class="cyan--text">Compression approach</v-tab>
+      <v-tab class="cyan--text">LSTM approach</v-tab>
+      <v-tab class="cyan--text">Lexical approach</v-tab>
+      <v-tab class="cyan--text">Emotion polysome approach</v-tab>
     </v-tabs>
     <v-tabs-items class="pa-5" v-model="tab">
-      <v-tab-item>
-        <v-form>
-          <v-textarea
-            background-color="blue-grey lighten-4"
-            color="black"
-            outlined
-            name="text"
-            label="Kannada Input Text"
-            height="350"
-            v-model="kannadaText"
-            :value="kannadaText"
-            clearable
-          ></v-textarea>
-          <div class="btn-container">
-            <v-btn class="cyan--text">Predict Author</v-btn>
-          </div>
-        </v-form>
-      </v-tab-item>
-      <v-tab-item></v-tab-item>
-      <v-tab-item></v-tab-item>
-      <v-tab-item></v-tab-item>
-      <v-tab-item></v-tab-item>
+      <v-tab-item> </v-tab-item>
+      <v-tab-item><Approach type="ngram" /></v-tab-item>
+      <v-tab-item><Approach type="compression" /></v-tab-item>
+      <v-tab-item><Approach type="lstm" /></v-tab-item>
+      <v-tab-item><Approach type="lexical" /></v-tab-item>
+      <v-tab-item><Approach type="emotion" /></v-tab-item>
     </v-tabs-items>
   </div>
 </template>
 
 <script>
+import Approach from "../components/design/Approach.vue";
 export default {
+  components: {
+    Approach,
+  },
   data() {
     return {
-      tab: null,
+      tab: 1,
       kannadaText: "",
     };
   },
