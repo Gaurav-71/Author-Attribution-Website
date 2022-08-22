@@ -8,6 +8,8 @@ from sklearn.pipeline import FeatureUnion
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
+nltk.download('punkt')
+
 warnings.filterwarnings("ignore")
 
 
