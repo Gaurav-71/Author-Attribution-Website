@@ -1,5 +1,11 @@
 <template>
-  <div class="approach">
+  <div class="wip" v-if="approachType == 'na'">
+    <img src="../../assets/wip.svg" alt="work in progress" />
+    <div class="text-h4">
+      We are working on deploying this approach, please try again later !
+    </div>
+  </div>
+  <div v-else class="approach">
     <div class="text-h4 mb-3">{{ titleString() }}</div>
     <v-divider class="mb-5"></v-divider>
     <div v-if="isLoading"><Loading /></div>
@@ -143,5 +149,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.wip {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: auto;
+    height: 60vh;
+  }
 }
 </style>

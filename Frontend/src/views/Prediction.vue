@@ -12,9 +12,9 @@
       <v-tab-item> </v-tab-item>
       <v-tab-item><Approach type="ngram" /></v-tab-item>
       <v-tab-item><Approach type="compression" /></v-tab-item>
-      <v-tab-item><Approach type="lstm" /></v-tab-item>
-      <v-tab-item><Approach type="lexical" /></v-tab-item>
-      <v-tab-item><Approach type="emotion" /></v-tab-item>
+      <v-tab-item><Approach type="na" /></v-tab-item>
+      <v-tab-item><Approach type="na" /></v-tab-item>
+      <v-tab-item><Approach type="na" /></v-tab-item>
     </v-tabs-items>
   </div>
 </template>
