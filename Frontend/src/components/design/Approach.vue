@@ -24,14 +24,23 @@
           clearable
         ></v-textarea>
         <div class="btn-container">
-          <v-btn @click="copyText()" class="pl-0" text
-            ><v-icon class="mr-3">mdi-content-copy</v-icon>Copy sample text to
-            clipboard
-          </v-btn>
+          <v-file-input
+            color="cyan"
+            accept=".txt"
+            chips
+            prepend-icon="mdi-cloud-upload"
+            label="Upload a File"
+            class="cyan--text"
+            @change="fileUpload()"
+            @click:clear="clear()"
+            v-model="file"
+          ></v-file-input>
+
           <div class="btns">
-            <v-btn text class="cyan--text mr-4"
-              ><v-icon class="mr-2">mdi-upload</v-icon> Upload file</v-btn
-            >
+            <v-btn @click="copyText()" class="mr-3 cyan--text" text
+              ><v-icon class="mr-3">mdi-content-copy</v-icon>Copy sample text to
+              clipboard
+            </v-btn>
             <v-btn @click="predictAuthor()" class="cyan--text"
               ><v-icon class="mr-2">mdi-chart-timeline-variant-shimmer</v-icon
               >Predict Author</v-btn
@@ -75,6 +84,8 @@ export default {
       kannadaText: "",
       prediction: null,
       isLoading: false,
+      file: null,
+      content: null,
     };
   },
   methods: {
@@ -123,7 +134,7 @@ export default {
       return res.toFixed(2).toString() + "%";
     },
     reset() {
-      this.kannadaText = "";
+      this.clear();
       this.prediction = null;
       this.isLoading = false;
     },
@@ -145,6 +156,24 @@ export default {
         });
       this.kannadaText = text;
     },
+    fileUpload() {
+      const reader = new FileReader();
+      try {
+        if (this.file.name.includes(".txt")) {
+          reader.onload = (res) => {
+            this.content = res.target.result;
+            this.kannadaText = this.content;
+          };
+          reader.onerror = (err) => console.log(err);
+          reader.readAsText(this.file);
+        }
+      } catch (err) {}
+    },
+    clear() {
+      this.content = null;
+      this.kannadaText = null;
+      this.file = null;
+    },
   },
 };
 </script>
@@ -165,5 +194,14 @@ export default {
     width: auto;
     height: 60vh;
   }
+}
+
+.btns {
+  display: flex;
+  align-items: center;
+}
+
+.v-file-input {
+  max-width: 200px;
 }
 </style>
