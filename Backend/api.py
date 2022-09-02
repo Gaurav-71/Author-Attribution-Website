@@ -33,7 +33,7 @@ def ngram():
             {
                 "Author_Name":'{}'.format(result_pred[0]),
                 "Accuracy":str(accuracy),
-                "Model": "ngram model"
+                "Model": "ngram"
             }
         )
 
@@ -47,7 +47,7 @@ def compression():
             {
                 "Author_Name":'{}'.format(result),
                 "Accuracy":str(accuracy),
-                "Model": "compression Model (bzip)"
+                "Model": "compression"
             }
 
         )

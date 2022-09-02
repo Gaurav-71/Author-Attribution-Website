@@ -1,16 +1,10 @@
 <template>
-  <div class="wip" v-if="approachType == 'na'">
-    <img src="../../assets/wip.svg" alt="work in progress" />
-    <div class="text-h4">
-      We are working on deploying this approach, please try again later !
-    </div>
-  </div>
-  <div v-else class="approach">
+  <div class="approach">
     <div class="text-h4 mb-3">{{ titleString() }}</div>
     <v-divider class="mb-5"></v-divider>
     <div v-if="isLoading"><Loading /></div>
     <div v-else>
-      <v-form v-if="!prediction">
+      <v-form v-if="!results.ngram">
         <v-textarea
           background-color="blue-grey lighten-4"
           color="cyan darken-1"
@@ -43,18 +37,35 @@
         <div class="text-h5 cyan--text mb-3">Input Text</div>
         {{ limitText(kannadaText) }}
         <div class="text-h5 cyan--text mt-5 mb-3">Results</div>
-        <div class="author-name d-flex">
-          <b class="mr-1">Author Name</b> :
-          {{ formatName(prediction.Author_Name) }}
-        </div>
-        <div class="accuracy">
-          <b>Prediction Accuracy</b> :
-          {{ formatAccuracy(prediction.Accuracy) }}
-        </div>
+        <v-simple-table fixed-header dense>
+          <template v-slot:default>
+            <thead>
+              <tr class="table-header">
+                <th class="text-left">Model Name</th>
+                <th class="text-left">Author Name</th>
+                <th class="text-left">Model Accuracy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(result, index) in results" :key="index">
+                <td>{{ formatModelName(result.Model) }}</td>
+                <td>{{ formatName(result.Author_Name) }}</td>
+                <td>{{ formatAccuracy(result.Accuracy) }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+        <Bar
+          class="mt-5"
+          :chart-options="chartOptions"
+          :chart-data="chartData"
+        />
         <v-divider class="mt-8"></v-divider>
-        <v-btn @click="reset()" dark class="mt-6 cyan"
-          ><v-icon class="mr-3">mdi-reload</v-icon> Try Again</v-btn
-        >
+        <div class="d-flex justify-center">
+          <v-btn @click="reset()" dark class="mt-6 cyan"
+            ><v-icon class="mr-3">mdi-reload</v-icon> Try Again</v-btn
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -64,49 +75,136 @@
 import axios from "axios";
 import Loading from "./Loading.vue";
 
+import { Bar } from "vue-chartjs/legacy";
+
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
+
 export default {
-  components: { Loading },
+  components: { Loading, Bar },
   props: {
     type: String,
   },
   data() {
     return {
+      mock: !true,
       approachType: this.type,
       kannadaText: "",
-      prediction: null,
       isLoading: false,
+      results: {
+        ngram: null,
+        compression: null,
+        // lstm: null,
+        // lexical: null,
+        // polysome: null,
+      },
+      mockresults: {
+        ngram: {
+          Author_Name: "Gaurav Vinay",
+          Accuracy: "0.99",
+          Model: "ngram",
+        },
+        compression: {
+          Author_Name: "Gaurav Vinay",
+          Accuracy: "0.93",
+          Model: "compression",
+        },
+        lstm: {
+          Author_Name: "Gaurav Vinay",
+          Accuracy: "0.9",
+          Model: "lstm",
+        },
+        lexical: {
+          Author_Name: "Gaurav Vinay",
+          Accuracy: "1",
+          Model: "lexical",
+        },
+        polysome: {
+          Author_Name: "Gaurav Vinay",
+          Accuracy: "0.80",
+          Model: "emotion",
+        },
+      },
+      chartData: {
+        labels: [
+          "N-gram",
+          "Compression",
+          // "LSTM",
+          // "Lexical",
+          // "Emotion Polysome",
+        ],
+        datasets: [
+          {
+            label: "Bar Graph",
+            backgroundColor: [
+              "#767B81",
+              "#1D7874",
+              "#679289",
+              "#F4C095",
+              "#EE646E",
+            ],
+            data: [],
+          },
+        ],
+      },
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
     };
   },
   methods: {
     titleString() {
-      switch (this.approachType) {
-        case "ngram":
-          return "N-gram Approach";
-        case "compression":
-          return "Compression Approach";
-        case "lstm":
-          return "LSTM Approach";
-        case "lexical":
-          return "Lexical Approach";
-        case "emotion":
-          return "Emotion Polysome Approach";
-      }
+      return "Combined Approach";
     },
-    predictAuthor() {
+    async predictAuthor() {
       this.isLoading = true;
       let baseUrl = "http://127.0.0.1:9090/";
-      axios
-        .post(baseUrl + this.approachType, {
+      try {
+        let ngram = await axios.post(baseUrl + "ngram", {
           kannada_text: this.kannadaText,
-        })
-        .then((resp) => {
-          this.prediction = resp.data;
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          console.log("err" + err);
-          this.isLoading = false;
         });
+        this.results.ngram = ngram.data;
+
+        let compression = await axios.post(baseUrl + "compression", {
+          kannada_text: this.kannadaText,
+        });
+        this.results.compression = compression.data;
+        // add the other models here once it's complete
+      } catch (err) {
+        console.log("eeeeeeee", err);
+        this.results = {
+          ngram: null,
+          compression: null,
+          // lstm: null,
+          // lexical: null,
+          // polysome: null,
+        };
+      }
+      this.chartData.datasets[0].data = [
+        this.results.ngram.Accuracy * 100,
+        this.results.compression.Accuracy * 100,
+        // this.results.lstm.Accuracy * 100,
+        // this.results.lexical.Accuracy * 100,
+        // this.results.polysome.Accuracy * 100,
+      ];
+      this.isLoading = false;
     },
     formatName(authorName) {
       var words = authorName.split("_");
@@ -122,9 +220,29 @@ export default {
       let res = accuracy * 100;
       return res.toFixed(2).toString() + "%";
     },
+    formatModelName(model) {
+      switch (model) {
+        case "ngram":
+          return "N-gram";
+        case "compression":
+          return "Compression";
+        case "lstm":
+          return "LSTM";
+        case "lexical":
+          return "Lexical";
+        case "emotion":
+          return "Emotion Polysome";
+      }
+    },
     reset() {
       this.kannadaText = "";
-      this.prediction = null;
+      this.results = {
+        ngram: null,
+        compression: null,
+        // lstm: null,
+        // lexical: null,
+        // polysome: null,
+      };
       this.isLoading = false;
     },
     limitText(text) {
@@ -145,6 +263,18 @@ export default {
         });
       this.kannadaText = text;
     },
+  },
+  created() {
+    if (this.mock) {
+      this.results = this.mockresults;
+      this.chartData.datasets[0].data = [
+        this.results.ngram.Accuracy * 100,
+        this.results.compression.Accuracy * 100,
+        this.results.lstm.Accuracy * 100,
+        this.results.lexical.Accuracy * 100,
+        this.results.polysome.Accuracy * 100,
+      ];
+    }
   },
 };
 </script>

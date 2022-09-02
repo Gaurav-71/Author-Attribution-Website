@@ -9,7 +9,7 @@
       <v-tab class="cyan--text">Emotion polysome approach</v-tab>
     </v-tabs>
     <v-tabs-items class="pa-5" v-model="tab">
-      <v-tab-item> </v-tab-item>
+      <v-tab-item> <All /></v-tab-item>
       <v-tab-item><Approach type="ngram" /></v-tab-item>
       <v-tab-item><Approach type="compression" /></v-tab-item>
       <v-tab-item><Approach type="na" /></v-tab-item>
@@ -20,14 +20,16 @@
 </template>
 
 <script>
+import All from "../components/design/All.vue";
 import Approach from "../components/design/Approach.vue";
 export default {
   components: {
     Approach,
+    All,
   },
   data() {
     return {
-      tab: 1,
+      tab: 0,
       kannadaText: "",
     };
   },
