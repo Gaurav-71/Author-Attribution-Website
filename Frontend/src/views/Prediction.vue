@@ -4,7 +4,7 @@
       <v-tab class="cyan--text">All</v-tab>
       <v-tab class="cyan--text">Ngram approach</v-tab>
       <v-tab class="cyan--text">Compression approach</v-tab>
-      <v-tab class="cyan--text">LSTM approach</v-tab>
+      <!-- <v-tab class="cyan--text">LSTM approach</v-tab> -->
       <v-tab class="cyan--text">Lexical approach</v-tab>
       <v-tab class="cyan--text">Emotion polysome approach</v-tab>
     </v-tabs>
@@ -12,9 +12,9 @@
       <v-tab-item> <All /></v-tab-item>
       <v-tab-item><Approach type="ngram" /></v-tab-item>
       <v-tab-item><Approach type="compression" /></v-tab-item>
-      <v-tab-item><Approach type="na" /></v-tab-item>
-      <v-tab-item><Approach type="na" /></v-tab-item>
-      <v-tab-item><Approach type="na" /></v-tab-item>
+      <!-- <v-tab-item><Approach type="na" /></v-tab-item> -->
+      <v-tab-item><Approach type="lexical" /></v-tab-item>
+      <v-tab-item><Approach type="polysemy" /></v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      tab: 1,
+      tab: 0,
       kannadaText: "",
     };
   },

@@ -31,10 +31,24 @@
           ></v-file-input>
 
           <div class="btns">
-            <v-btn @click="copyText()" class="mr-3 cyan--text" text
+            <!-- <v-btn @click="copyText()" class="mr-3 cyan--text" text
               ><v-icon class="mr-3">mdi-content-copy</v-icon>Copy sample text to
               clipboard
-            </v-btn>
+            </v-btn> -->
+            <v-menu offset-y>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn class="mr-3 cyan--text" text v-bind="attrs" v-on="on"
+                  ><v-icon class="mr-3">mdi-content-copy</v-icon>Copy sample
+                  text to clipboard
+                </v-btn>
+              </template>
+              <v-list v-for="(author, index) in authors" :key="index">
+                <v-list-item :key="index" @click="copyText(index + 1)">
+                  {{ author }}
+                </v-list-item>
+                <v-divider v-if="index != authors.length - 1"></v-divider>
+              </v-list>
+            </v-menu>
             <v-btn @click="predictAuthor()" class="cyan--text"
               ><v-icon class="mr-2">mdi-chart-timeline-variant-shimmer</v-icon
               >Predict Author</v-btn
@@ -83,8 +97,11 @@
 <script>
 import axios from "axios";
 import Loading from "./Loading.vue";
+import { baseUrl } from "../../Constants";
 
 import { Bar } from "vue-chartjs/legacy";
+
+import { text1, text2, text3, text4, authors } from "./SampleText";
 
 import {
   Chart as ChartJS,
@@ -118,12 +135,13 @@ export default {
       isLoading: false,
       file: null,
       content: null,
+      authors: authors,
       results: {
         ngram: null,
         compression: null,
         // lstm: null,
-        // lexical: null,
-        // polysome: null,
+        lexical: null,
+        polysome: null,
       },
       mockresults: {
         ngram: {
@@ -136,11 +154,11 @@ export default {
           Accuracy: "0.93",
           Model: "compression",
         },
-        lstm: {
-          Author_Name: "Gaurav Vinay",
-          Accuracy: "0.9",
-          Model: "lstm",
-        },
+        // lstm: {
+        //   Author_Name: "Gaurav Vinay",
+        //   Accuracy: "0.9",
+        //   Model: "lstm",
+        // },
         lexical: {
           Author_Name: "Gaurav Vinay",
           Accuracy: "1",
@@ -157,8 +175,8 @@ export default {
           "N-gram",
           "Compression",
           // "LSTM",
-          // "Lexical",
-          // "Emotion Polysome",
+          "Lexical",
+          "Emotion Polysome",
         ],
         datasets: [
           {
@@ -184,36 +202,43 @@ export default {
     titleString() {
       return "Combined Approach";
     },
+    generatePostObject(approachType) {
+      var formData = new FormData();
+      formData.append("kannada_text", this.kannadaText);
+      return {
+        method: "POST",
+        url: baseUrl + approachType,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      };
+    },
     async predictAuthor() {
       this.isLoading = true;
-      let baseUrl = "http://127.0.0.1:9090/";
       try {
-        let ngram = await axios.post(baseUrl + "ngram", {
-          kannada_text: this.kannadaText,
-        });
+        let ngram = await axios(this.generatePostObject("ngram"));
+        let compression = await axios(this.generatePostObject("compression"));
+        let lexical = await axios(this.generatePostObject("lexical"));
+        let polysome = await axios(this.generatePostObject("polysemy"));
         this.results.ngram = ngram.data;
-
-        let compression = await axios.post(baseUrl + "compression", {
-          kannada_text: this.kannadaText,
-        });
         this.results.compression = compression.data;
-        // add the other models here once it's complete
+        this.results.lexical = lexical.data;
+        this.results.polysome = polysome.data;
       } catch (err) {
-        console.log("eeeeeeee", err);
+        console.log("error", err);
         this.results = {
           ngram: null,
           compression: null,
           // lstm: null,
-          // lexical: null,
-          // polysome: null,
+          lexical: null,
+          polysome: null,
         };
       }
       this.chartData.datasets[0].data = [
         this.results.ngram.Accuracy * 100,
         this.results.compression.Accuracy * 100,
-        // this.results.lstm.Accuracy * 100,
-        // this.results.lexical.Accuracy * 100,
-        // this.results.polysome.Accuracy * 100,
+        // this.results.compression.lstm * 100,
+        this.results.lexical.Accuracy * 100,
+        this.results.polysome.Accuracy * 100,
       ];
       this.isLoading = false;
     },
@@ -237,11 +262,11 @@ export default {
           return "N-gram";
         case "compression":
           return "Compression";
-        case "lstm":
-          return "LSTM";
-        case "lexical":
+        // case "lstm":
+        //   return "LSTM";
+        case "Lexical Model":
           return "Lexical";
-        case "emotion":
+        case "Polysemy":
           return "Emotion Polysome";
       }
     },
@@ -251,8 +276,8 @@ export default {
         ngram: null,
         compression: null,
         // lstm: null,
-        // lexical: null,
-        // polysome: null,
+        lexical: null,
+        polysome: null,
       };
       this.isLoading = false;
     },
@@ -263,9 +288,22 @@ export default {
         return text;
       }
     },
-    copyText() {
-      let text =
-        "ಅದಕ್ಕೆ ಯಾಕೆ ನಾನು ಹಾಗೆ ಹೆಸರಿಟ್ಟೆನೋ ಗೊತ್ತಿಲ್ಲ. ಆಗಿನ್ನೂ ‘ಹಾಯ್ ಬೆಂಗಳೂರ್!’ ರೂಪು ತಳೆದಿರಲಿಲ್ಲ. ‘ಕರ್ಮವೀರ’ದಲ್ಲಿ ಇದ್ದೆ. ಮೊಟ್ಟ ಮೊದಲ ಸಂದರ್ಶನ ಬರೆಯುವ ಘಳಿಗೆಯಲ್ಲಿ, ಇದು ಎಲ್ಲೆಲ್ಲಿ ತಿರುಗಿ ಏನೇನು ರೂಪು ಪಡೆಯುತ್ತದೆಯೋ? ಗೊತ್ತಿರಲಿಲ್ಲ. ಒಂದು ಸಣ್ಣ ಮಳೆಯ ಇಳಿ ಸಂಜೆ ಶಿವಾಜಿನಗರದ ಕೋಳಿ ಅಂಗಡಿಯಲ್ಲಿ ನಾನು ಕೋಳಿ ಫಯಾಜ್‌ನನ್ನು ಭೇಟಿ ಮಾಡಿದ್ದೆ. ಕರೆದೊಯ್ದು ಪರಿಚಯಿಸಿದ್ದು ಗೆಳೆಯ ಸಿದ್ದೀಕ್ ಆಲ್ದೂರಿ. ಆತನಿಗಾದರೂ ಅಷ್ಟೆ. ಮುಂದೆ ಇದು ಯಾವ ರೂಪು ಪಡೆಯಲಿದೆ ಎಂಬ ಅಂದಾಜಿರಲಿಲ್ಲ. ಆಲ್ದೂರಿ ಆಗ ‘ಡೈಲಿ ಸಾಲಾರ್’ ನಲ್ಲಿ ವರದಿಗಾರನಾಗಿದ್ದ. ತುಂಬ ಸಜ್ಜನ ಆತ. ಕೋಳಿ ಫಯಾಜ್ ಕೂಡ ನನ್ನೊಂದಿಗೆ ಸಜ್ಜನನಾಗೇ ನಡೆದುಕೊಂಡ. ಫಯಾಜ್‌ನ ನಂತರ ನಾನು ಯಾರ‍್ಯಾರನ್ನು ಭೇಟಿ ಮಾಡಿದೆ, ಎಲ್ಲೆಲ್ಲಿ ಅಲೆದೆ ಎಂಬುದೆಲ್ಲ ಈಗ ಇತಿಹಾಸ. ನಾನು ‘ಕರ್ಮವೀರ’ದಿಂದ ಹೊರ ಬೀಳುವ ಹೊತ್ತಿಗೆ ಶ್ರೀರಾಂಪುರ ಕಿಟ್ಟಿ, ಕಾಲಾಪತ್ಥರ್, ಬಲರಾಮ, ಬೆಕ್ಕಣ್ಣು ರಾಜೇಂದ್ರ, ಜೇಡರಹಳ್ಳಿ ಕೃಷ್ಣಪ್ಪ- ಹೀಗೆ ಅನೇಕರನ್ನು ಭೇಟಿಯಾಗಿದ್ದೆ. ಕೆಲವರು ‘ಕರ್ಮವೀರ’ ಆಫೀಸಿಗೂ ಬಂದು ಹೋದರು. ಈ ಸಂದರ್ಶನದ ಸರಮಾಲೆಗೆ ‘ಪಾಪಿಗಳ ಲೋಕದಲ್ಲಿ’ ಅಂತ ಹೆಸರಿಟ್ಟೆ. ಹಾಗೇಕೆ ಇಟ್ಟೆನೋ? ಗೊತ್ತಿಲ್ಲ. ಇತ್ತೀಚೆಗೆ ಅದೇ ತರಹದ್ದಕ್ಕೆ ಕೈಹಾಕಿದೆ. ‘ಇದನ್ನೇನು ಮಾಡ್ತೀರಿ?’ ಎಂದು ಗೆಳೆಯರೊಬ್ಬರು ಕೇಳಿದರು. ಉತ್ತರ ನನಗೂ ಕೊಡಲಾಗಲಿಲ್ಲ. ಕೆಲವು ಸನ್ಯಾಸಿಗಳ ಬಗ್ಗೆ ಮಾಹಿತಿ ಕಲೆ ಹಾಕುತ್ತಿದ್ದೆ. ‘ಕಾವಿಗಳ ಕೂಪದಲ್ಲಿ’ ಅಂತ ಹೆಸರಿಡಬಹುದು ನೋಡಿ, ಅಂದೆ. ಆತ ನಕ್ಕರು. ನಾನು ನಗಲಿಲ್ಲ. ಸುಮಾರು ಹದಿನೆಂಟು ವರ್ಷಗಳಷ್ಟು ಹಳೆಯ ನೋಟ್ಸ್  ನನ್ನಲ್ಲಿದೆ. ನಾನು ಬಯಲುಮಾಡಿದ ಮಾಡಿದ ಮೊಟ್ಟ ಮೊದಲನೆಯ ವಂಚಕ ಸ್ವಾಮಿ ಯಶವಂತಪುರದವನು ಇದು ಮಾರಕ ವರದಿಯಾಗಿದೆ. ‘ಪತ್ರಿಕೆ’ ಆಗಷ್ಟೆ ಆರಂಭವಾಗಿತ್ತು. ಯಶವಂತಪುರದಲ್ಲಿ ಬಿ.ಸಿ.ಪಾಟೀಲ್ ಸಬ್ ಇನ್ಸ್ ಪೆಕ್ಟರ್ ಆಗಿದ್ದರು. ಆಮೇಲೆ ಬಿಡಿ, ಅನೇಕರು ಬಯಲುಮಾಡಿದ ಆದರು. ನನ್ನ ವಧಾ ಸ್ಥಾನಕ್ಕೆ ಬಂದು ಹೋದರು. ಶಿರಸಿಯ ಒಬ್ಬ ಕಳ್ಳ ಸನ್ಯಾಸಿಯಂತೂ ‘ಪತ್ರಿಕೆ’ಯ ವರದಿಯಿಂದಾಗಿ ಬುಕ್ಕಾ ಫಕೀರನೇ ಆಗಿಹೋದ. ಅಂಥವರು ಅನೇಕರಿದ್ದಾರೆ. ಅದಲ್ಲ ಮುಖ್ಯ. ಸನ್ಯಾಸ, ದೇವಮಾನವ ಮುಂತಾದವು ಕೇವಲ ಕರ್ನಾಟಕದಲ್ಲಿಲ್ಲ. ಅದು ಜಾಗತಿಕ ಮಟ್ಟದ ಅಧ್ಯಯನ. ಓದಲು ಕುಳಿತರೆ ಆತಂಕವೇ ಆಗುತ್ತದೆ. ಮನುಕುಲಕ್ಕೆ ಎಂಥ ದರಿದ್ರ ಕೊಡುಗೆ ಇವರದು? ಪಕ್ಕದ ತಮಿಳುನಾಡಿನಲ್ಲಿ ದೇವಮಾನವನೆಂದು ಹೇಳಿಕೊಂಡು ಭಯಾನಕ ಕೃತ್ಯಗಳನ್ನೆಸಗಿದ ಒಬ್ಬ ಕಪಟಿ ಸ್ವಾಮಿಗೆ, ತುಂಬ ದಿಟ್ಟ ಹೆಣ್ಣು ಮಗಳಾದ ಭಾನುಮತಿ ಎಂಬ ನ್ಯಾಯಾಧೀಶೆ ಎರಡು ಜೀವಾವಧಿ ಶಿಕ್ಷೆ ನೀಡಿದರು. ಒಂದಾದ ಮೇಲೊಂದರಂತೆ ಎರಡು ಶಿಕ್ಷೆ ಅನುಭವಿಸಬೇಕು. ಅರವತ್ತೇಳು ಲಕ್ಷ ದಂಡ ಕಟ್ಟಬೇಕು. ಜೀವಾವಧಿಗೆ ಸಂಬಂಧಿಸಿದಂತೆ ಯಾವ ರಾಜಕೀಯ ಪಕ್ಷವೂ, ಸರ್ಕಾರವೂ ಈ ಪ್ರಕರಣದಲ್ಲಿ ತಲೆ ಹಾಕಬಾರದು ಅಂತ ಸ್ಪಷ್ಟವಾಗಿ ಬರೆದು ಆಕೆ ಎದ್ದು ಹೋದರು. ಶಿಕ್ಷೆ ಕಳೆಯುವ ಸಂಗತಿ ಹಾಗಿರಲಿ, ಜೈಲಿಗೆ ಹೋದ ಕೆಲವೇ ದಿನಗಳಲ್ಲಿ ಕಪಟಿ ಸನ್ಯಾಸಿ ಸತ್ತು ಹೋದ. ಅವನಿಗೆ ವಿಪರೀತ ದೊಡ್ಡ ಮಟ್ಟದ ರಾಜಕೀಯ ಸಂಪರ್ಕಗಳಿದ್ದವು. ಮೊನ್ನೆ ನಡೆದ ಸಸಾರಾಮ್ ಬಾಪು ಪ್ರಕರಣವನ್ನೇ ನೋಡಿ. ಅವನು ಒಂದು ಕಾಲು ಗೋರಿಯಲ್ಲಿಟ್ಟು ಕೊಂಡಿದ್ದಾನೆ. ಅಷ್ಟು ಮುದುಕ. ಅಂಥವನು ರೇಪ್ ಮಾಡುತ್ತಾನೆ. ಅವನ ಆಶ್ರಮದಲ್ಲಿ ಕೊಲೆಗಳಾಗಿವೆ. ಬಂಧಿಸಲು ಹೋದರೆ, ಪೊಲೀಸರನ್ನು ಭಕ್ತರು ಶತ್ರು ದೇಶದವರನ್ನು ತಡೆದಂತೆ ತಡೆದರು. ಕೊಡುವ ಜಾಗಕ್ಕೆ ಸರಿಯಾಗಿ ನಾಲ್ಕು ಬಾರಿಸಿ ಪೊಲೀಸರು ಮುದುಕನನ್ನು ಎಳೆದೊಯ್ದರು. ಮೊದಲೆಲ್ಲಾ ಹೀಗೆ ದೇವಮಾನವರು ಬಯಲು ಆಗುತ್ತಿರಲಿಲ್ಲ. ಅವರನ್ನು ಸಾಲುಗಟ್ಟಿ ಆಗ ಬಯಲಿಗೆಳೆದದ್ದು ಸರ್ದಾರ್ ಖುಷ್ವಂತ್‌ಸಿಂಗ್. ನಾನು ಅವರ ಬರಹಗಳಿಗಾಗಿಯೇ ‘ಇಲ್ಲ ಸ್ಟ್ರೇಟೆಡ್ ವೀಕ್ಲಿ’ ಓದುತ್ತಿದ್ದೆ. ಈ ದೇವಮಾನವರಿಗೆ ಒಂದೆರಡಲ್ಲ; ನಾನಾ ಟ್ರಿಕ್ಕುಗಳು ಗೊತ್ತಿವೆ. ರವಿಶಂಕರ್ ಗುರೂಜಿಯನ್ನೇ ನೋಡಿ. ಎಂಥೆಂಥವರನ್ನು ಪಳಗಿಸಿಟ್ಟುಕೊಂಡಿದ್ದಾನೆ. ಅವನು ದೇಶಗಳನ್ನು ಸುತ್ತುವರೆಯುವುದೇ ಒಂದು ಅಚ್ಚರಿ. ಇವತ್ತೋ-ನಾಳೆಯೋ ಒಂದು ನೊಬೆಲ್ ಪ್ರಶಸ್ತಿ ಬಂದರೆ ಆಶ್ಚರ್ಯ ಪಡಲೇ ಬೇಡಿ. ಬಂದರೆ ನನಗೆ ಬೇಸರವೇನೂ ಇಲ್ಲ. ಆದರೆ ಆತ ಆ ಪರಿ ಅಪಸ್ವರ ಹಾಡುತ್ತಾನೆ. ಹಾಡೋದು ಬಿಟ್ಟರೆ ಮಾತ್ರ ನೊಬೆಲ್ ಬಹುಮಾನ ಕೊಡ್ತೀವಿ ಅಂತ ಆ ಪ್ರತಿಷ್ಠಾನದವರು ಷರತ್ತು ಹಾಕಬೇಕು. ಇಂತಹವರ ಪ್ರಪಂಚವೇ ಬೇರೆ. ನಿಮಗೂ ಓದಲಿಕ್ಕೆ ರುಚಿಕರ ಅನ್ನಿಸೀತು. ‘ಕಾವಿಗಳ ಕೂಪದಲ್ಲಿ’ ಎಂಬ ಹೆಸರೂ ಸರಿಯಿದೆ, ಅಲ್ಲವೆ? ಕೆಲಸ ಮಾತ್ರ ಎದೆಗಿಂತ ಎತ್ತರ. ನೋಡೋಣ.";
+    copyText(type) {
+      let text = "";
+      switch (type) {
+        case 1:
+          text = text1;
+          break;
+        case 2:
+          text = text2;
+          break;
+        case 3:
+          text = text3;
+          break;
+        case 4:
+          text = text4;
+          break;
+      }
       navigator.clipboard
         .writeText(text)
         .then()
@@ -299,7 +337,7 @@ export default {
       this.chartData.datasets[0].data = [
         this.results.ngram.Accuracy * 100,
         this.results.compression.Accuracy * 100,
-        this.results.lstm.Accuracy * 100,
+        // this.results.lstm.Accuracy * 100,
         this.results.lexical.Accuracy * 100,
         this.results.polysome.Accuracy * 100,
       ];

@@ -13,7 +13,7 @@
         class="mt-3"
         width="130"
         height="40"
-        src="../../assets/rit.png"
+        src="../../assets/random/rit.png"
       ></v-img>
     </div>
   </v-card>

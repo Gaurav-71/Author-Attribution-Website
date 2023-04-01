@@ -17,7 +17,8 @@
     <div class="actions">
       <v-btn to="/" text>About</v-btn>
       <v-btn to="/datasets" text>Datasets</v-btn>
-      <v-btn to="prediction" rounded color="cyan">Prediction</v-btn>
+      <v-btn to="/feedback" text>Feedback</v-btn>
+      <v-btn to="/prediction" rounded color="cyan">Prediction</v-btn>
     </div>
   </v-app-bar>
 </template>
