@@ -65,7 +65,9 @@
       </v-form>
       <div v-else class="results">
         <div class="text-h5 cyan--text mb-3">Input Text</div>
-        {{ limitText(kannadaText) }}
+        <div translate="no" class="notranslate">
+          {{ limitText(kannadaText) }}
+        </div>
         <div class="text-h5 cyan--text mt-5 mb-3">Results</div>
         <div class="author-name d-flex">
           <b class="mr-1">Author Name</b> :

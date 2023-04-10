@@ -15,6 +15,7 @@
     </div>
     <v-spacer></v-spacer>
     <div class="actions">
+      <v-btn text><div id="google_translate_element"></div></v-btn>
       <v-btn to="/" text>About</v-btn>
       <v-btn to="/datasets" text>Datasets</v-btn>
       <v-btn to="/feedback" text>Feedback</v-btn>

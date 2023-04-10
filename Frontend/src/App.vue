@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header />
-    <v-main>
+    <v-main style="padding-top: 1.5rem">
       <router-view />
     </v-main>
   </v-app>
@@ -23,5 +23,17 @@ export default {
 @import "./scss/main.scss";
 .v-main {
   background-image: $body-bg;
+}
+.skiptranslate {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+#google_translate_element {
+  .skiptranslate {
+    position: static;
+    margin: 0 !important;
+  }
 }
 </style>

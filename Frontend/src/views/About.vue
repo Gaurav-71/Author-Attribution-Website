@@ -1,5 +1,5 @@
 <template>
-  <div class="about-page pa-5">
+  <div class="about-page pa-5 pt-10">
     <div class="text-h4 mt-2 cyan--text">
       Development and Analysis of Real-time Computational Linguistic Algorithms
       for Authorship Prediction on Indian Regional Languages
