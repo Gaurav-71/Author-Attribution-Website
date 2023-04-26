@@ -16,7 +16,7 @@
           color="cyan darken-1"
           outlined
           name="text"
-          label="Kannada Input Text"
+          label="ಕನ್ನಡ ಇನ್‌ಪುಟ್ ಪಠ್ಯ"
           height="350"
           v-model="kannadaText"
           :value="kannadaText"
@@ -29,7 +29,7 @@
             accept=".txt"
             chips
             prepend-icon="mdi-cloud-upload"
-            label="Upload a File"
+            label="ಫೈಲ್ ಅಪ್ಲೋಡ್ ಮಾಡಿ"
             class="cyan--text"
             @change="fileUpload()"
             @click:clear="clear()"
@@ -44,8 +44,8 @@
             <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn class="mr-3 cyan--text" text v-bind="attrs" v-on="on"
-                  ><v-icon class="mr-3">mdi-content-copy</v-icon>Copy sample
-                  text to clipboard
+                  ><v-icon class="mr-3">mdi-content-copy</v-icon>ಮಾದರಿಯನ್ನು
+                  ನಕಲಿಸಿ ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ಪಠ್ಯ
                 </v-btn>
               </template>
               <v-list v-for="(author, index) in authors" :key="index">
@@ -58,28 +58,28 @@
 
             <v-btn @click="predictAuthor()" class="cyan--text"
               ><v-icon class="mr-2">mdi-chart-timeline-variant-shimmer</v-icon
-              >Predict Author</v-btn
+              >ಲೇಖಕರನ್ನು ಗುರುತಿಶಸಿ</v-btn
             >
           </div>
         </div>
       </v-form>
       <div v-else class="results">
-        <div class="text-h5 cyan--text mb-3">Input Text</div>
+        <div class="text-h5 cyan--text mb-3">ಇನ್ಪುಟ್ ಪಠ್ಯ</div>
         <div translate="no" class="notranslate">
           {{ limitText(kannadaText) }}
         </div>
-        <div class="text-h5 cyan--text mt-5 mb-3">Results</div>
+        <div class="text-h5 cyan--text mt-5 mb-3">ಫಲಿತಾಂಶಗಳು</div>
         <div class="author-name d-flex">
-          <b class="mr-1">Author Name</b> :
+          <b class="mr-1">ಲೇಖಕರ ಹೆಸರು</b> :
           {{ formatName(prediction.Author_Name) }}
         </div>
         <div class="accuracy">
-          <b>Prediction Accuracy</b> :
+          <b>ಮುನ್ಸೂಚನೆಯ ನಿಖರತೆ</b> :
           {{ formatAccuracy(prediction.Accuracy) }}
         </div>
         <v-divider class="mt-8"></v-divider>
         <v-btn @click="reset()" dark class="mt-6 cyan"
-          ><v-icon class="mr-3">mdi-reload</v-icon> Try Again</v-btn
+          ><v-icon class="mr-3">mdi-reload</v-icon> ಮತ್ತೆ ಪ್ರಯತ್ನಿಸು</v-btn
         >
       </div>
     </div>
@@ -112,15 +112,15 @@ export default {
     titleString() {
       switch (this.approachType) {
         case "ngram":
-          return "N-gram Approach";
+          return "ಎನ್-ಗ್ರಾಮ್ ಅಪ್ರೋಚ್";
         case "compression":
-          return "Compression Approach";
+          return "ಕಂಪ್ರೆಷನ್ ಅಪ್ರೋಚ್";
         case "lstm":
           return "LSTM Approach";
         case "lexical":
-          return "Lexical Approach";
+          return "ಲೆಕ್ಸಿಕಲ್ ಅಪ್ರೋಚ್";
         case "polysemy":
-          return "Emotion Polysome Approach";
+          return "ಭಾವನೆ ಪಾಲಿಸೋಮ್ ಅಪ್ರೋಚ್";
       }
     },
     predictAuthor() {

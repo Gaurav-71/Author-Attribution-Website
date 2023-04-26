@@ -1,8 +1,8 @@
 <template>
-  <div class="dataset">
+  <div class="dataset mt-10">
     <v-tabs v-model="tab">
-      <v-tab class="cyan--text">Upload</v-tab>
-      <v-tab class="cyan--text">View by Author</v-tab>
+      <v-tab class="cyan--text">ಅಪ್ಲೋಡ್</v-tab>
+      <v-tab class="cyan--text">ಲೇಖಕರಿಂದ ವೀಕ್ಷಿಸಿ</v-tab>
     </v-tabs>
     <v-tabs-items class="pa-5" v-model="tab">
       <v-tab-item class="upload">
@@ -11,17 +11,19 @@
         </div>
         <div class="right">
           <div class="flex">
-            <div class="text-h4 mb-3 cyan--text">Upload Author Files</div>
+            <div class="text-h4 mb-3 cyan--text">
+              ಲೇಖಕರ ಫೈಲ್‌ಗಳನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ
+            </div>
             <v-btn
               @click="toggleDialog"
               color="cyan"
               class="white--text py-4 mb-4 ml-3"
-              >Create Author</v-btn
+              >ಲೇಖಕರನ್ನು ರಚಿಸಿ</v-btn
             >
           </div>
           <v-divider></v-divider>
           <v-autocomplete
-            label="Select Author"
+            label="ಲೇಖಕರನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
             class="mt-3"
             filled
             :loading="loading"
@@ -30,13 +32,13 @@
             :items="authors"
             item-text="name"
             item-value="id"
-            messages="Note : Please create a new author if author name is not in the existing list of authors"
+            messages="ಗಮನಿಸಿ : ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಲೇಖಕರ ಪಟ್ಟಿಯಲ್ಲಿ ಲೇಖಕರ ಹೆಸರು ಇಲ್ಲದಿದ್ದರೆ ದಯವಿಟ್ಟು ಹೊಸ ಲೇಖಕರನ್ನು ರಚಿಸಿ"
           ></v-autocomplete>
           <v-file-input
             show-size
             counter
-            label="Select .txt files"
-            placeholder="Select files to upload"
+            label=".txt ಫೈಲ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+            placeholder="ಅಪ್‌ಲೋಡ್ ಮಾಡಲು ಫೈಲ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ"
             class="mt-2"
             multiple
             filled
@@ -51,25 +53,25 @@
               color="cyan white--text"
               class="ml-auto mt-4"
               @click="uploadFiles"
-              >Upload Files</v-btn
+              >ಫೈಲ್‌ಗಳನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</v-btn
             >
           </div>
           <v-dialog v-model="dialog" width="auto">
             <div class="pa-5 white" style="width: 80vw">
-              <div class="text-h5 cyan--text">New Author in Database</div>
+              <div class="text-h5 cyan--text">ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಹೊಸ ಲೇಖಕ</div>
               <div class="text-caption mb-4">
-                Creating a new author helps in organising all related literary
-                work together
+                ಹೊಸ ಲೇಖಕರನ್ನು ರಚಿಸುವುದು ಎಲ್ಲಾ ಸಂಬಂಧಿತ ಸಾಹಿತ್ಯವನ್ನು ಸಂಘಟಿಸಲು ಸಹಾಯ
+                ಮಾಡುತ್ತದೆ ಒಟ್ಟಾಗಿ ಕೆಲಸಮಾಡಿ
               </div>
               <v-text-field
-                label="Author name"
-                placeholder="Enter author name"
+                label="ಲೇಖಕರ ಹೆಸರು"
+                placeholder="ಲೇಖಕರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
                 filled
                 v-model="newAuthor"
                 color="cyan"
               ></v-text-field>
               <v-btn color="cyan white--text" block @click="createAuthor"
-                >Create Author</v-btn
+                >ಲೇಖಕರನ್ನು ರಚಿಸಿ</v-btn
               >
             </div>
           </v-dialog>

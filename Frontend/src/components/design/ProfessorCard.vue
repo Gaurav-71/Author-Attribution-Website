@@ -6,11 +6,11 @@
     <div class="card-body">
       <div class="text-h6 px-3">{{ data.name }}</div>
       <div class="caption px-3">{{ data.role }}</div>
-      <div class="px-3 pt-3 body-2">
+      <div class="px-3 pt-3 caption">
         {{ data.designation }}
       </div>
       <v-img
-        class="mt-3"
+        class="mt-4"
         width="130"
         height="40"
         src="../../assets/random/rit.png"
@@ -37,7 +37,7 @@ export default {
 
 <style lang="scss" scoped>
 .v-card {
-  width: 28rem;
+  width: 30rem;
   height: 12rem;
   display: flex;
   margin-right: 3rem;

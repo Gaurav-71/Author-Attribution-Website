@@ -9,17 +9,15 @@
         width="50"
         height="50"
       />
-      <v-btn class="title-btn pl-2" text
-        >Author Attribution for Kannada Text</v-btn
-      >
+      <v-btn class="title-btn pl-2" text>ಕನ್ನಡ ಪಠ್ಯದ ಕರ್ತೃತ್ವ ಪರೀಕ್ಷೆ</v-btn>
     </div>
     <v-spacer></v-spacer>
     <div class="actions">
-      <v-btn text><div id="google_translate_element"></div></v-btn>
-      <v-btn to="/" text>About</v-btn>
-      <v-btn to="/datasets" text>Datasets</v-btn>
-      <v-btn to="/feedback" text>Feedback</v-btn>
-      <v-btn to="/prediction" rounded color="cyan">Prediction</v-btn>
+      <!-- <v-btn text><div id="google_translate_element"></div></v-btn> -->
+      <v-btn to="/" text>ಮುಖಪುಟ</v-btn>
+      <v-btn to="/datasets" text>ಡೇಟಾಸೆಟ್‌ಗಳು</v-btn>
+      <v-btn to="/feedback" text>ಪ್ರತಿಕ್ರಿಯೆ</v-btn>
+      <v-btn to="/prediction" rounded color="cyan">ಲೇಖಕರನ್ನು ಗುರುತಿಶಸಿ</v-btn>
     </div>
   </v-app-bar>
 </template>

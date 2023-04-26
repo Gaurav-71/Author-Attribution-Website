@@ -1,7 +1,7 @@
 <template>
   <div class="all-files">
     <v-btn @click="downloadAll" :loading="loading" :disabled="loading"
-      >Download Datasets</v-btn
+      >ಡೇಟಾಸೆಟ್‌ಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</v-btn
     >
   </div>
 </template>

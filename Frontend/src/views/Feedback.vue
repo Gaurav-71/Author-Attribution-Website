@@ -1,15 +1,15 @@
 <template>
-  <div class="px-4 pa-2">
+  <div class="px-4 pa-2 mt-10">
     <div class="d-flex justify-space-between align-center">
       <div class="left">
-        <div class="text-h4 mt-2 cyan--text">Feedback</div>
+        <div class="text-h4 mt-2 cyan--text">ಪ್ರತಿಕ್ರಿಯೆ</div>
         <div class="my-2">
-          We value your opinion and appreciate you taking the time to share your
-          thoughts with us.
+          ನಿಮ್ಮ ಅಭಿಪ್ರಾಯವನ್ನು ನಾವು ಗೌರವಿಸುತ್ತೇವೆ ಮತ್ತು ನಿಮ್ಮ ಆಲೋಚನೆಗಳನ್ನು
+          ನಮ್ಮೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಲು ಸಮಯ ತೆಗೆದುಕೊಳ್ಳುವುದನ್ನು ನಾವು ಪ್ರಶಂಸಿಸುತ್ತೇವೆ.
         </div>
       </div>
       <div class="right">
-        <v-btn @click="handleClick()">Share Feedback</v-btn>
+        <v-btn @click="handleClick()">ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</v-btn>
       </div>
     </div>
     <v-divider></v-divider>
@@ -20,7 +20,7 @@
       type="warning"
       title=""
       text=""
-      >Loading Feedback ...</v-alert
+      >ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ ...</v-alert
     >
     <v-alert
       v-if="feedbacks.length === 0"
@@ -28,7 +28,7 @@
       type="info"
       title=""
       text=""
-      >No feedback shared yet !</v-alert
+      >ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಇನ್ನೂ ಹಂಚಿಕೊಂಡಿಲ್ಲ !</v-alert
     >
     <div v-else>
       <div v-for="(feedback, index) in feedbacks" :key="index">
@@ -40,24 +40,26 @@
     </div>
     <v-dialog v-model="dialog" width="auto">
       <v-card class="pa-5">
-        <div class="text-h4 cyan--text">Share Feedback</div>
+        <div class="text-h4 cyan--text">ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</div>
         <div class="py-3">
-          We value your opinion and appreciate you taking the time to share your
-          thoughts with us. Your feedback is important in helping us improve our
-          products and services to better meet your needs. Please use the form
-          below to provide your feedback, comments, suggestions, or any issues
-          you may have experienced.
+          ನಿಮ್ಮ ಅಭಿಪ್ರಾಯವನ್ನು ನಾವು ಗೌರವಿಸುತ್ತೇವೆ ಮತ್ತು ನಿಮ್ಮ ಅಭಿಪ್ರಾಯವನ್ನು
+          ಹಂಚಿಕೊಳ್ಳಲು ನೀವು ಸಮಯವನ್ನು ತೆಗೆದುಕೊಳ್ಳುವುದನ್ನು ಪ್ರಶಂಸಿಸುತ್ತೇವೆ
+          ನಮ್ಮೊಂದಿಗೆ ಆಲೋಚನೆಗಳು. ನಮ್ಮದನ್ನು ಸುಧಾರಿಸಲು ನಮಗೆ ಸಹಾಯ ಮಾಡುವಲ್ಲಿ ನಿಮ್ಮ
+          ಪ್ರತಿಕ್ರಿಯೆ ಮುಖ್ಯವಾಗಿದೆ ನಿಮ್ಮ ಅಗತ್ಯಗಳನ್ನು ಉತ್ತಮವಾಗಿ ಪೂರೈಸಲು ಉತ್ಪನ್ನಗಳು
+          ಮತ್ತು ಸೇವೆಗಳು. ದಯವಿಟ್ಟು ಫಾರ್ಮ್ ಅನ್ನು ಬಳಸಿ ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ,
+          ಕಾಮೆಂಟ್‌ಗಳು, ಸಲಹೆಗಳು ಅಥವಾ ಯಾವುದೇ ಸಮಸ್ಯೆಗಳನ್ನು ಒದಗಿಸಲು ಕೆಳಗೆ ನೀವು
+          ಅನುಭವಿಸಿರಬಹುದು.
         </div>
         <v-divider></v-divider>
         <div class="pt-3">
           <v-text-field
-            label="uname"
+            label="ಹೆಸರು"
             :disabled="saving"
             filled
             v-model="uname"
           ></v-text-field>
           <v-textarea
-            label="Feedback"
+            label="ರತಿಕ್ರಿಯೆ"
             filled
             :disabled="saving"
             v-model="newFeedback"
@@ -71,7 +73,7 @@
             :disabled="saving"
             class="white--text ml-auto mr-2"
             @click="handleClick()"
-            >Cancel</v-btn
+            >ರದ್ದುಮಾಡು</v-btn
           >
           <v-btn
             color="cyan"
@@ -79,7 +81,7 @@
             :loading="saving"
             class="white--text"
             @click="saveFeedback()"
-            >Share</v-btn
+            >ಪಾಲು</v-btn
           >
         </div>
       </v-card>

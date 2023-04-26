@@ -4,7 +4,7 @@
       <div class="circle"></div>
       <div class="orbit"></div>
     </div>
-    <div class="ml-3">Predicting author based on input text ...</div>
+    <div class="ml-3">ಇನ್‌ಪುಟ್ ಪಠ್ಯವನ್ನು ಆಧರಿಸಿ ಲೇಖಕರನ್ನು ಊಹಿಸುವುದು ...</div>
   </div>
 </template>
 

@@ -1,36 +1,37 @@
 <template>
   <div class="about-page pa-5 pt-10">
-    <div class="text-h4 mt-2 cyan--text">
-      Development and Analysis of Real-time Computational Linguistic Algorithms
-      for Authorship Prediction on Indian Regional Languages
+    <div class="text-h4 mt-5 cyan--text">
+      ಭಾರತೀಯ ಪ್ರಾದೇಶಿಕ ಭಾಷೆಗಳಲ್ಲಿ ಕರ್ತೃತ್ವದ ಪರೀಕ್ಷೆಗಾಗಿ ತಾಕ್ಷಣಿಕ ಗಣಕೀಯ ಭಾಷಾ
+      ಶಾಸ್ತ್ರೀಯ ಕ್ರಮಾವಳಿಗಳ (ಅಲ್ಗಾರಿದಮ್‌ಗಳ) ಅಭಿವೃದ್ಧಿ ಮತ್ತು ವಿಶ್ಲೇಷಣೆ
     </div>
     <p class="mt-6">
-      Authorship prediction is one of the popular applications of Natural
-      language processing. It is a task of predicting the probability of a true
-      author of an anonymous text based on his/her writing style. Kannada being
-      one of the popular south Indian languages is lagging in this domain. It is
-      the state language of Karnataka and spoken by more than 50 million people
-      around the globe. The language has a rich set of vocabulary, grammar and
-      literature. Text processing on many Indian regional languages is
-      progressing highly but in Kannada, it is still in a tender stage. The
-      proposed work mainly focuses on predicting the authorship of an unknown
-      Kannada text based on the Stylometry features.
+      ಕರ್ತೃತ್ವ ಪರೀಕ್ಷೆಯು ಸಹಜ ಭಾಷಾ ಸಂಸ್ಕರಣೆಯ ಜನಪ್ರಿಯ ಅನ್ವಯಗಳಲ್ಲಿ ಒಂದಾಗಿದೆ. ಇದು
+      ಕರ್ತೃವಿನ ಬರವಣಿಗೆಯ ಶೈಲಿಯ ಆಧಾರದ ಮೇಲೆ ದತ್ತ ಪಠ್ಯದ ಲೇಖಕರು ಯಾರು ಎಂಬುದರ
+      ಸಂಭವನೀಯತೆಯನ್ನು ಊಹಿಸುವ ಕಾರ್ಯವಾಗಿದೆ. ದಕ್ಷಿಣ ಭಾರತದ ಜನಪ್ರಿಯ ಭಾಷೆಗಳಲ್ಲಿ
+      ಒಂದಾಗಿರುವ ಕನ್ನಡವು ಈ ಕ್ಷೇತ್ರದಲ್ಲಿ ಹಿಂದುಳಿದಿದೆ. ಇದು ಕರ್ನಾಟಕದ ರಾಜ್ಯ
+      ಭಾಷೆಯಾಗಿದೆ ಮತ್ತು ಜಗತ್ತಿನಾದ್ಯಂತ ಆರು ಕೋಟಿಗೂ ಹೆಚ್ಚು ಜನರು ಮಾತನಾಡುತ್ತಾರೆ. ಕನ್ನಡ
+      ಭಾಷೆಯು ಶಬ್ದಕೋಶ, ವ್ಯಾಕರಣ ಮತ್ತು ಸಾಹಿತ್ಯಗಳಲ್ಲಿ ಶ್ರೀಮಂತವಾಗಿದೆ. ಅನೇಕ ಭಾರತೀಯ
+      ಪ್ರಾದೇಶಿಕ ಭಾಷೆಗಳಲ್ಲಿ ಪಠ್ಯ ಸಂಸ್ಕರಣೆಯು ಹೆಚ್ಚು ಪ್ರಗತಿಯಲ್ಲಿದೆ. ಆದರೆ ಕನ್ನಡದಲ್ಲಿ
+      ಇದು ಇನ್ನೂ ಆರಂಭಿಕ ಹಂತದಲ್ಲಿದೆ. ಪ್ರಸ್ತಾವಿತ ಅನ್ವಯವು ಮುಖ್ಯವಾಗಿ ಶೈಲಿಮಾಪನ
+      (ಸ್ಟೈಲೋಮೆಟ್ರಿ) ವೈಶಿಷ್ಟ್ಯಗಳ ಆಧಾರದ ಮೇಲೆ ಅಜ್ಞಾತ ಕನ್ನಡ ಪಠ್ಯದ ಕರ್ತೃತ್ವವನ್ನು
+      ಊಹಿಸುವುದರ ಕುರಿತು ಗಮನ ನೀಡುತ್ತದೆ.
     </p>
     <div class="approaches">
       <div v-for="(approach, index) in approaches" :key="index">
         <Card :data="approach" />
       </div>
     </div>
-    <div class="text-h4 cyan--text">Societal impact</div>
+    <div class="text-h4 cyan--text">ಸಾಮಾಜಿಕ ಪರಿಣಾಮ</div>
     <p class="mt-6">
-      The proposed work will be contributed to Karnataka Ganaka Parishath a
-      voluntary organization contributed in the area of Kannada text processing.
-      KAGAPA has contributed voluminous dataset for the proposed work. KAGAPA
-      will be utilizing this tool to resolve any authorship issues in literature
-      in future. The entire work will be automated and developed as an
-      application tool and will be released for the public to use it.
+      ಪ್ರಸ್ತಾವಿತ ಅನ್ವಯವನ್ನು ಕನ್ನಡ ಪಠ್ಯ ಸಂಸ್ಕರಣಾ ಕ್ಷೇತ್ರಕ್ಕೆ ಗಣನೀಯವಾಗಿ ಕೊಡುಗೆ
+      ನೀಡಿರುವ ಸ್ವಯಂಸೇವಾ ಸಂಸ್ಥೆ ಕನ್ನಡ ಗಣಕ ಪರಿಷತ್ತಿಗೆ ಕೊಡುಗೆಯಾಗಿ ನೀಡಲಾಗುವುದು.
+      ಕನ್ನಡ ಗಣಕ ಪರಿಷತ್ತು ಈ ಕೆಲಸಕ್ಕಾಗಿ ಬೃಹತ್ ಮಾಹಿತಿ ಸಂಚಯವನ್ನು ಕೊಡುಗೆಯಾಗಿ ನೀಡಿದೆ.
+      ಭವಿಷ್ಯದಲ್ಲಿ ಸಾಹಿತ್ಯದಲ್ಲಿ ಯಾವುದೇ ಕರ್ತೃತ್ವದ ಸಮಸ್ಯೆಗಳನ್ನು ಪರಿಹರಿಸಲು ಕನ್ನಡ ಗಣಕ
+      ಪರಿಷತ್ತು ಈ ಸೌಲಭ್ಯವನ್ನು ಬಳಸಿಕೊಳ್ಳುತ್ತದೆ. ಮುಂದೆ ಈ ಕರ್ತೃತ್ವ ಪರೀಕ್ಷೆಯ
+      ಅನ್ವಯವನ್ನು ಪೂರ್ಣ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ನಿರ್ವಹಿಸುವಂತಹ ಅನ್ವಯಸೌಲಭ್ಯವಾಗಿ
+      ಅಭಿವೃದ್ಧಿಪಡಿಸಲಾಗುತ್ತದೆ ಮತ್ತು ಅದನ್ನು ಸಾರ್ವಜನಿಕ ಬಳಕೆಗೆ ಬಿಡುಗಡೆ ಮಾಡಲಾಗುತ್ತದೆ.
     </p>
-    <div class="text-h4 cyan--text mt-8">Author & Supervisor</div>
+    <div class="text-h4 cyan--text mt-8">ಲೇಖಕರು ಮತ್ತು ಮೇಲ್ವಿಚಾರಕರು</div>
     <div class="professors mt-8">
       <div v-for="(professor, index) in professors" :key="index">
         <ProfessorCard :data="professor" />
@@ -50,50 +51,50 @@ export default {
       approaches: [
         {
           imgName: "profile",
-          title: "Profile based approach",
+          title: "ಸ್ವರೂಪ ಲಕ್ಷಣ ಆಧಾರಿತ ವಿಧಾನ",
           description:
-            "Extracted Lexical features like frequency of words/ character/ nouns/pronouns/ word pair and then classified using various classification algorithms",
+            "ಪದಗಳ ಆವರ್ತನ/ ಅಕ್ಷರ/ ನಾಮಪದಗಳು/ಸರ್ವನಾಮಗಳು/ ಪದ ಜೋಡಿಯಂತಹ ಶಬ್ದಕೋಶೀಯ   ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಹೊರತೆಗೆಯಲಾಗುತ್ತದೆ ಮತ್ತು ನಂತರ ವಿವಿಧ ವರ್ಗೀಕರಣ ಕ್ರಮಾವಳಿಗಳನ್ನು ಬಳಸಿಕೊಂಡು ವರ್ಗೀಕರಿಸಲಾಗುತ್ತದೆ.",
         },
         {
           imgName: "lstm",
-          title: "Bi-directional LSTM technique",
+          title: "ದ್ವಿ-ದಿಕ್ಕಿನ ಎಲ್‌ ಎಸ್‌ ಟಿ ಎಂ ತಂತ್ರ",
           description:
-            "Syntactic features like POS tags are extracted and classified using LSTM network",
+            "ವ್ಯಾಕರಣರೂಪದ ಗುರುತುಗಳಂತಹ  ವಾಕ್ಯರಚನಾತ್ಮಕ  ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ದೀರ್ಘ ಅಲ್ಪಕಾಲಿಕ ಸ್ಮೃತಿ ಜಾಲವನ್ನು  ಬಳಸಿ ಹೊರತೆಗೆಯಲಾಗುತ್ತದೆ ಮತ್ತು ವರ್ಗೀಕರಿಸಲಾಗುತ್ತದೆ",
         },
         {
           imgName: "instance",
-          title: "Instance based approach",
+          title: "ನಿದರ್ಶನ ಆಧಾರಿತ ವಿಧಾನ",
           description:
-            "Extracted syntactic features using word and char –N grams and classified using various classification algorithms",
+            "ಪದ ಮತ್ತು ಅಕ್ಷರ  -ಎನ್‌  ಗ್ರಾಂ(ವಾಕ್ಯ ಅಥವಾ ಪದಖಂಡದಲ್ಲಿ ಕ್ರಮವಾಗಿ, ಪಕ್ಕಪಕ್ಕದಲ್ಲಿ ಬರುವ ಅಕ್ಷರ, ಪದ ಅಥವಾ ಪದಜೋಡಿಗಳ ಸಂಖ್ಯೆ) ಗಳನ್ನು ಬಳಸಿಕೊಂಡು ವಾಕ್ಯರಚನಾತ್ಮಕ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಗುರುತಿಸಲಾಗುತ್ತದೆ  ಮತ್ತು ವಿವಿಧ ವರ್ಗೀಕರಣ ಕ್ರಮಾವಳಿಗಳನ್ನು ಬಳಸಿಕೊಂಡು ವರ್ಗೀಕರಿಸಲಾಗುತ್ತದೆ.",
         },
         {
           imgName: "compression",
-          title: "Compression based approach",
+          title: "ಸಂಕೋಚನ ಆಧಾರಿತ ವಿಧಾನ",
           description:
-            "Applied Zip, Gzip, Bzip, LZMA and PPmd compression algorithms to predict the probability of a true author.",
+            "ದತ್ತ ಪಠ್ಯದ ಕರ್ತೃವಿನ ಸಂಭವನೀಯತೆಯನ್ನು ಊಹಿಸಲು Zip, Gzip, Bzip, LZMA ಮತ್ತು PPmd ಸಂಕೋಚನ ಕ್ರಮಾವಳಿಗಳನ್ನು ಅನ್ವಯಿಸಲಾಗಿದೆ.",
         },
         {
           imgName: "graph",
-          title: "Graph based approach",
+          title: "ಗ್ರಾಫ್ ಆಧಾರಿತ ವಿಧಾನ",
           description:
-            "Representing the author and their articles as a connected graph then extracting the character and word N-gram features and perform the classification using convolution neural network.",
+            "ಲೇಖಕ ಮತ್ತು ಅವರ ಲೇಖನಗಳನ್ನು ಸಂಪರ್ಕಿತ ಗ್ರಾಫ್‌ನಂತೆ ಪ್ರತಿನಿಧಿಸುವುದು ನಂತರ ಅಕ್ಷರ ಮತ್ತು ಪದ N-ಗ್ರಾಂ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಹೊರತೆಗೆಯುವುದು ಮತ್ತು ಕನ್ವಲ್ಯೂಷನ್ ನ್ಯೂರಲ್ ನೆಟ್‌ವರ್ಕ್ (ಜಟಿಲ ನರತಂತು ವ್ಯೂಹವನ್ನು ) ಬಳಸಿಕೊಂಡು ವರ್ಗೀಕರಣವನ್ನು ನಿರ್ವಹಿಸುವುದು.",
         },
       ],
       professors: [
         {
           imgName: "chandrika",
-          name: "Mrs. Chandrika Prasad",
-          role: "Author",
+          name: "ಶ್ರೀಮತಿ. ಚಂದ್ರಿಕಾ ಪ್ರಸಾದ್",
+          role: "ಲೇಖಕರು",
           designation:
-            "Research Scholar in the Dept. of Computer Science & Engineering",
+            "ಕಂಪ್ಯೂಟರ್ ಸೈನ್ಸ್ ಮತ್ತು ಇಂಜಿನಿಯರಿಂಗ್ ವಿಭಾಗದಲ್ಲಿ ಸಂಶೋಧನಾ ವಿಧ್ಯಾರ್ಥಿ",
           college: "Ramaiah Institute of Technology",
         },
         {
           imgName: "jaggi",
-          role: "Supervisor",
-          name: "Dr. Jagadish Kallimani",
+          role: "ಮೇಲ್ವಿಚಾರಕರು",
+          name: "ಡಾ. ಜಗದೀಶ ಕಳ್ಳಿಮನಿ",
           designation:
-            "Professor & Head of Artificial Intelligence & Machine Learning",
+            "ಪ್ರೊಫೆಸರ್ ಮತ್ತು ಮುಖ್ಯಸ್ಥರು- ಆರ್ಟಿಫಿಶಿಯಲ್ ಇಂಟೆಲಿಜೆನ್ಸ್ ಮತ್ತು ಮೆಷಿನ್ ಲರ್ನಿಂಗ್ ",
           college: "Ramaiah Institute of Technology",
         },
       ],

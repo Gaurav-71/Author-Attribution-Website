@@ -33,8 +33,8 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/main.scss";
 .v-card {
-  width: 16rem;
-  height: 24rem;
+  width: 17rem;
+  height: 29rem;
   display: grid;
   grid-auto-rows: 45% auto;
   overflow: hidden;

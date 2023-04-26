@@ -1,12 +1,12 @@
 <template>
-  <div class="prediction">
+  <div class="prediction mt-10">
     <v-tabs v-model="tab">
-      <v-tab class="cyan--text">All</v-tab>
-      <v-tab class="cyan--text">Ngram approach</v-tab>
-      <v-tab class="cyan--text">Compression approach</v-tab>
+      <v-tab class="cyan--text">ಎಲ್ಲಾ</v-tab>
+      <v-tab class="cyan--text">ಎನ್ಗ್ರಾಮ್ ವಿಧಾನ</v-tab>
+      <v-tab class="cyan--text">ಸಂಕೋಚನ ವಿಧಾನ</v-tab>
       <!-- <v-tab class="cyan--text">LSTM approach</v-tab> -->
-      <v-tab class="cyan--text">Lexical approach</v-tab>
-      <v-tab class="cyan--text">Emotion polysome approach</v-tab>
+      <v-tab class="cyan--text">ಲೆಕ್ಸಿಕಲ್ ವಿಧಾನ</v-tab>
+      <v-tab class="cyan--text">ಭಾವನೆ ಪಾಲಿಸೋಮ್ ವಿಧಾನ</v-tab>
     </v-tabs>
     <v-tabs-items class="pa-5" v-model="tab">
       <v-tab-item> <All /></v-tab-item>
