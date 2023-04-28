@@ -59,7 +59,7 @@
             v-model="uname"
           ></v-text-field>
           <v-textarea
-            label="ರತಿಕ್ರಿಯೆ"
+            label="ಪ್ರತಿಕ್ರಿಯೆ"
             filled
             :disabled="saving"
             v-model="newFeedback"
@@ -81,7 +81,7 @@
             :loading="saving"
             class="white--text"
             @click="saveFeedback()"
-            >ಪಾಲು</v-btn
+            >ಕಳುಹಿಸಿ</v-btn
           >
         </div>
       </v-card>

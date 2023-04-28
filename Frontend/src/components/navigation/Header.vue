@@ -17,7 +17,7 @@
       <v-btn to="/" text>ಮುಖಪುಟ</v-btn>
       <v-btn to="/datasets" text>ಡೇಟಾಸೆಟ್‌ಗಳು</v-btn>
       <v-btn to="/feedback" text>ಪ್ರತಿಕ್ರಿಯೆ</v-btn>
-      <v-btn to="/prediction" rounded color="cyan">ಲೇಖಕರನ್ನು ಗುರುತಿಶಸಿ</v-btn>
+      <v-btn to="/prediction" rounded color="cyan">ಲೇಖಕರನ್ನು ಗುರುತಿಸಿ</v-btn>
     </div>
   </v-app-bar>
 </template>
